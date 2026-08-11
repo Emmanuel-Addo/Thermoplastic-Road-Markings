@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -21,7 +21,8 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 def load_skill_prompt():
-    skill_file = os.path.join(os.path.dirname(__file__), "SKILL.md")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    skill_file = os.path.join(base_dir, "SKILL.md")
     if os.path.exists(skill_file):
         with open(skill_file, "r") as f:
             return f.read()
