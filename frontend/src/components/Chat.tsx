@@ -26,14 +26,13 @@ export default function Chat() {
     setLoading(true)
 
     try {
-      const res = await fetch('https://thermoplastic-road-markings.vercel.app/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
       })
       const data = await res.json()
-      const cleanReply = data.reply.replace(/\*/g, '').replace(/#+\s/g, '').replace(/\n{3,}/g, '\n\n')
-      setMessages(prev => [...prev, { role: 'bot', content: cleanReply }])
+      setMessages(prev => [...prev, { role: 'bot', content: data.reply }])
     } catch {
       setMessages(prev => [...prev, { role: 'bot', content: 'Error: Could not connect to server' }])
     } finally {
