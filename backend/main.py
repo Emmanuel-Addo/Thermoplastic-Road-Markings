@@ -33,6 +33,10 @@ system_prompt = load_skill_prompt()
 class ChatRequest(BaseModel):
     message: str
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "Thermoplastic Road Markings API is running"}
+
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
     chat = model.start_chat(history=[])
