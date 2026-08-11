@@ -32,7 +32,8 @@ export default function Chat() {
         body: JSON.stringify({ message: userMessage }),
       })
       const data = await res.json()
-      setMessages(prev => [...prev, { role: 'bot', content: data.reply }])
+      const cleanReply = data.reply.replace(/\*/g, '').replace(/#+\s/g, '').replace(/\n{3,}/g, '\n\n')
+      setMessages(prev => [...prev, { role: 'bot', content: cleanReply }])
     } catch {
       setMessages(prev => [...prev, { role: 'bot', content: 'Error: Could not connect to server' }])
     } finally {
@@ -42,11 +43,11 @@ export default function Chat() {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">Gemini Chatbot</div>
+      <div className="chat-header">Thermoplastic Road Markings</div>
       
       <div className="chat-messages">
         {messages.length === 0 && (
-          <div className="message bot">Hello! How can I help you today?</div>
+          <div className="message bot">Hello! Ask me about thermoplastic road markings, glass beads, application temperatures, or thickness standards.</div>
         )}
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
@@ -71,7 +72,7 @@ export default function Chat() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
-          placeholder="Type a message..."
+          placeholder="Ask about thermoplastic, glass beads, application..."
           disabled={loading}
         />
         <button onClick={sendMessage} disabled={loading}>

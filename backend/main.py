@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 def load_skill_prompt():
     skill_file = os.path.join(os.path.dirname(__file__), "SKILL.md")
